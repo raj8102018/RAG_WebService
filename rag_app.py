@@ -78,7 +78,7 @@ Question: {question}
 
 Answer: Provide all the answers to the given questions only. Format the answer as a valid JSON object with question numbers as keys and their respective answers as values. Ensure the output is plain JSON without any Markdown formatting or code block delimiters and does not include placeholders, additional characters, or line breaks.  The JSON must be syntactically correct and ready for parsing.
 """
-    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.3)
 
     prompt = PromptTemplate(
         template=prompt_template, input_variables=["context", "question"]
