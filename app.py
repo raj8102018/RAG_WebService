@@ -1,12 +1,17 @@
 """This module contains the API functionality"""
 from flask import Flask, request, jsonify
 from rag_app import answer_pdf
+import os
 
 app = Flask(__name__)
 
 def retrieve_and_generate_answer(question, file_name):
     """Function to retrieve answer from the text"""
     return answer_pdf(question,file_name)
+
+@app.route("/")
+def index():
+    return "Service is running!", 200
 
 # GET endpoint for asking questions (useful for simple queries)
 @app.route('/api/answer', methods=['GET'])
@@ -38,4 +43,6 @@ def post_answer():
     return jsonify({"question": question, "answer": answer})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port)
+
