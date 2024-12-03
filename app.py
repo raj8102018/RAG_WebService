@@ -43,6 +43,11 @@ def post_answer():
     return jsonify({"question": question, "answer": answer})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
-    app.run(host="0.0.0.0", port=port)
+    print(f"All environment variables: {os.environ}")  # Log all environment variables
+    port = os.environ.get("PORT")
+    if not port:
+        raise ValueError("PORT environment variable is missing.")
+    print(f"Resolved PORT: {port}")  # Log the resolved port
+    app.run(host="0.0.0.0", port=int(port))  # Ensure the port is an integer
+
 
