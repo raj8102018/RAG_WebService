@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
-
+from bson import ObjectId
 
 load_dotenv()
 os.getenv("GOOGLE_API_KEY")
@@ -37,7 +37,7 @@ def store_pdf_in_mongodb(pdf_file):
 
 def get_pdf_from_mongodb(user_id):
     """Fetch the PDF from MongoDB by user_id"""
-    pdf_doc = pdf_collection.find_one({"user_id": user_id})
+    pdf_doc = pdf_collection.find_one({"user_id": ObjectId(user_id)})
     if pdf_doc:
         pdf_bytes = pdf_doc["pdf_data"]
         return io.BytesIO(pdf_bytes)  # Return as BytesIO object to be processed
