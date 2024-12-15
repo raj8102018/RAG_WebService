@@ -10,6 +10,7 @@ from langchain.prompts import PromptTemplate
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
+from bson import ObjectId
 
 
 load_dotenv()
@@ -35,13 +36,13 @@ def store_pdf_in_mongodb(pdf_file):
     # store_pdf_in_mongodb(pdf_file)  # Pass the opened file object
 
 
-def get_pdf_from_mongodb(pdf_name):
-    """Fetch the PDF from MongoDB by file name"""
-    pdf_doc = pdf_collection.find_one({"file_name": pdf_name})
+def get_pdf_from_mongodb(user_id):
+    """Fetch the PDF from MongoDB by user_id"""
+    pdf_doc = pdf_collection.find_one({"user_id": ObjectId(user_id)})
     if pdf_doc:
         pdf_bytes = pdf_doc["pdf_data"]
         return io.BytesIO(pdf_bytes)  # Return as BytesIO object to be processed
-    print(f"No PDF found with name {pdf_name} in MongoDB.")
+    print(f"No PDF found with name {user_id} in MongoDB.")
     return None
 
 

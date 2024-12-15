@@ -18,12 +18,12 @@ def index():
 def get_answer():
     """Route handler to fetch the answer from text using a get request"""
     question = request.args.get('question')
-    file_name = request.args.get('user_id')
+    user_id = request.args.get('user_id')
 
     if not question:
         return jsonify({"error": "Please provide a question"}), 400
 
-    answer = retrieve_and_generate_answer(question, file_name)
+    answer = retrieve_and_generate_answer(question, user_id)
 
     return jsonify({"question": question, "answer": answer})
 
@@ -33,12 +33,12 @@ def post_answer():
     """Route handler to fetch the answer from text using a post request"""
     data = request.get_json()
     question = data.get('question')
-    file_name = data.get('user_id')
+    user_id = data.get('user_id')
 
     if not question:
         return jsonify({"error": "Please provide a question"}), 400
 
-    answer = retrieve_and_generate_answer(question,file_name)
+    answer = retrieve_and_generate_answer(question,user_id)
 
     return jsonify({"question": question, "answer": answer})
 
