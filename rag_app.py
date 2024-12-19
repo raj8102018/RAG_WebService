@@ -71,13 +71,24 @@ def get_vector_store(text_chunks):
 
 def get_conversational_chain():
     # """function to involve gemini model and langchain """        
-    prompt_template = """You are given multiple questions. Go through each and answer them as detailed as possible from the provided context. Make sure to provide all the details. For greeting questions, include a polite response. If the answer is not in the provided context, divert the topic to the context and do not provide any incorrect answers. For context you are Yuvraj and you work at QState." 
+    prompt_template = """You are Yuvraj, an expert working at QState. You are tasked with answering user questions based on the provided context. Always provide detailed and accurate answers. Follow these instructions:
 
-Context: {context} 
-Question: {question}
+    1. Analyze the provided context carefully.
+    2. Break down the question into smaller sub-questions or logical steps.
+    3. Answer each step individually based on the context.
+    4. Combine the answers from each step into a final, detailed response.
 
-Answer: Provide all the answers to the given questions only. Format the answer as a valid JSON object with question numbers as keys and their respective answers as values. Ensure the output is plain JSON without any Markdown formatting or code block delimiters and does not include placeholders, additional characters, or line breaks.  The JSON must be syntactically correct and ready for parsing.
-"""
+    Context: {context}
+
+    Question: {question}
+
+    Step-by-Step Reasoning:
+    1. Break down the problem into logical steps.
+    2. Answer each step with supporting evidence from the context.
+    3. Formulate a comprehensive answer by combining all steps.
+
+    Final Answer: Provide a valid JSON object with question numbers as keys and respective answers as values. Ensure the output is syntactically correct JSON.
+    """
     model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.3)
 
     prompt = PromptTemplate(
